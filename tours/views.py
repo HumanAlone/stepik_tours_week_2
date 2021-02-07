@@ -7,7 +7,7 @@ from data import tours, departures
 
 
 def main_view(request):
-    tours_temp = {key: tours[key] for key in sample(list(tours), 6)}
+    tours_temp = dict(sample(tours.items(), 6))
     context = {"tours": tours_temp}
     return render(request, "tours/index.html", context=context)
 
