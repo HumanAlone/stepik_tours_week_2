@@ -8,7 +8,7 @@ from data import tours, departures
 
 def main_view(request):
     tours_temp = {key: tours[key] for key in sample(list(tours), 6)}
-    context = {"tours": tours_temp, "departures": departures}
+    context = {"tours": tours_temp}
     return render(request, "tours/index.html", context=context)
 
 
@@ -22,14 +22,14 @@ def departure_view(request, departure):
     max_nights = max(temp.values(), key=lambda key: key["nights"])["nights"]
     information = {"min_price": min_price, "max_price": max_price, "min_nights": min_nights, "max_nights": max_nights}
     return render(request, "tours/departure.html",
-                  {'departures': departures, 'tours': temp, 'departure': departures[departure][2:],
+                  {'tours': temp, 'departure': departures[departure][2:],
                    "information": information})
 
 
 def tour_view(request, pk):
     if pk not in tours:
         raise Http404
-    context = {"tour": tours[pk], "departures": departures, "pk": pk,
+    context = {"tour": tours[pk], "pk": pk,
                "departure": departures[tours[pk]['departure']][2:]}
     return render(request, "tours/tour.html", context=context)
 
